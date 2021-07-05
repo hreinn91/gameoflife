@@ -1,3 +1,4 @@
+from random import randrange
 import matplotlib
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
@@ -7,6 +8,9 @@ from copy import deepcopy
 
 
 # Unix requires python3-tk
+
+ON = 255
+OFF = 0
 
 def plot_conf_style():
     # TkAgg required for display in Pycharm - render in canvas
@@ -23,22 +27,24 @@ def foo_plot():
     plt.show()
 
 
-def update(i, img, grid):
-    new_grid = grid
-    if new_grid[0, 1] == 255:
-        new_grid[0, 1] = 0
+def update(i, img, brain):
+    grid = brain.matrix.copy()
+    row = randrange(brain.size)
+    col = randrange(brain.size)
+    print(grid[row, col])
+    if grid[row, col] == ON:
+        grid[row, col] = OFF
     else:
-        new_grid[0, 1] = 255
-
-    img.set_data(new_grid)
-    # grid[:] = new_grid[:]
+        grid[row, col] = ON
+    img.set_data(grid)
+    brain.matrix = grid
     return img,
 
 
-def plot(grid):
+def plot(brain):
     fig, ax = plt.subplots()
-    img = ax.imshow(grid, interpolation='nearest')
-    ani = animation.FuncAnimation(fig, update, fargs=(img, grid),
+    img = ax.imshow(brain.matrix, interpolation='nearest')
+    ani = animation.FuncAnimation(fig, update, fargs=(img, brain),
                                   frames=19, interval=500, save_count=50)
     plt.show()
     pass
@@ -46,7 +52,6 @@ def plot(grid):
 
 if __name__ == '__main__':
     plot_conf_style()
-    N = 5
-    vals = [255, 0]
-    grid = np.random.choice(vals, N * N, p=[0.2, 0.8]).reshape(N, N)
-    plot(grid)
+    brain = Brain(50)
+    # grid = np.random.choice(vals, N * N, p=[0.2, 0.8]).reshape(N, N)
+    plot(brain)

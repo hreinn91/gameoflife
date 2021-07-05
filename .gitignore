@@ -1,6 +1,14 @@
+## python
+*.pyc
+
+
+
 # Virtual env
 venv/
 
-# idea
+## idea
 .idea/
 *.iml
+
+
+
