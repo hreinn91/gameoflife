@@ -1,5 +1,6 @@
 import unittest
-from src.brain import Brain
+from src.brain import Brain, ON, OFF
+import numpy as np
 
 
 class MyTestCase(unittest.TestCase):
@@ -8,6 +9,19 @@ class MyTestCase(unittest.TestCase):
         brain = Brain(size=size)
         self.assertEqual(brain.matrix.shape, (size, size))
         self.assertEqual(brain.matrix.size, size * size)
+
+    def test_get_live_count(self):
+        x = np.array([[ON, ON, ON], [ON, ON, ON], [ON, ON, ON]])
+        brain = Brain(ini_mat=x)
+        self.assertEqual(x.size, 9)
+        self.assertEqual(x.size, brain.get_live_count())
+
+    def test_step(self):
+        x = np.array([[ON, ON, ON], [ON, ON, ON], [ON, ON, ON]])
+        brain = Brain(ini_mat=x)
+        brain.step()
+        brain.step()
+        brain.step()
 
 
 if __name__ == '__main__':
