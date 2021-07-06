@@ -22,6 +22,10 @@ class Brain:
         else:
             self.matrix = ini_mat
             self.size = int(math.sqrt(ini_mat.size))
+        self.life_count = self.calc_life_count()
+
+    def get_val(self, i, j):
+        return self.matrix[i, j]
 
     def inject_block(self, row, column, block_size=4):
         self.matrix[row:row + block_size, column:column + block_size] = np.full((block_size, block_size), ON)
@@ -36,12 +40,14 @@ class Brain:
         for row in range(self.size):
             for col in range(self.size):
                 count = self.count_neighbours(self.matrix, row, col)
-                if count is 3:
+                if count == 3:
                     grid[row, col] = ON
-                elif count is not 2:
+                elif count != 2:
                     grid[row, col] = OFF
 
         self.matrix = grid
+        self.life_count = self.calc_life_count()
+        print('age: {} count: {}'.format(self.age, self.life_count))
         return self.matrix
 
     @staticmethod
@@ -52,7 +58,7 @@ class Brain:
                     matrix[(i - 1) % N, (j - 1) % N] + matrix[(i - 1) % N, (j + 1) % N] +
                     matrix[(i + 1) % N, (j - 1) % N] + matrix[(i + 1) % N, (j + 1) % N]) / ON)
 
-    def get_live_count(self):
+    def calc_life_count(self):
         count = 0
         for row in self.matrix:
             for index in row:

@@ -19,11 +19,11 @@ def update(i, img, brain):
     return img,
 
 
-def plot(brain):
+def plot_life(brain):
     fig, ax = plt.subplots()
     img = ax.imshow(brain.matrix, interpolation='nearest')
     ani = animation.FuncAnimation(fig, update, fargs=(img, brain),
-                                  frames=19, interval=500, save_count=50)
+                                  frames=70, interval=80, save_count=100)
     plt.show()
     pass
 
@@ -32,7 +32,6 @@ if __name__ == '__main__':
     plot_conf_style()
     init_mat = random_init(100)
     brain = Brain(ini_mat=init_mat)
-    brain.inject_block(10, 10)
-    brain.inject_block(30, 30)
-    brain.inject_block(50, 50)
-    plot(brain)
+    plot_life(brain)
+    # for i in range(10000):
+    #     brain.step()
