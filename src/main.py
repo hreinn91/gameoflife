@@ -11,7 +11,7 @@ from brain import Brain, random_init
 def plot_conf_style():
     # TkAgg required for display in Pycharm - render in canvas
     matplotlib.use('TkAgg')
-    matplotlib.pyplot.style.use('dracula')
+    #matplotlib.pyplot.style.use('dracula')
 
 
 def update(i, img, brain):
@@ -33,5 +33,3 @@ if __name__ == '__main__':
     init_mat = random_init(100)
     brain = Brain(ini_mat=init_mat)
     plot_life(brain)
-    # for i in range(10000):
-    #     brain.step()
